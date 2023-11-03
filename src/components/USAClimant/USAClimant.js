@@ -15,7 +15,6 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState, useEffect, Fragment } from "react";
-import Container from "@mui/material/Container";
 import "./styles.css";
 import { AbbrToFull } from "../../constants/StateHash";
 
@@ -28,12 +27,12 @@ const height = 500;
 const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
     const [month, setMonth] = useState(1);
     const [dataMap, setDataMap] = useState(new Map());
-    const [maxValue, setMaxValue] = useState(-100);
-    const [minValue, setMinValue] = useState(100);
+    const [maxValue_temp, setMaxValue_temp] = useState(-100);
+    const [minValue_temp, setMinValue_temp] = useState(100);
     const [maxValue_rain, setMaxValue_rain] = useState(-100);
     const [minValue_rain, setMinValue_rain] = useState(100);
     const [stateData, setStateData] = useState(0);
-    const attribute = "MonthlyAvgTemp";
+    const attribute_temp = "MonthlyAvgTemp";
     const attribute_rain = "MonthlyAvgPreciptation";
     useEffect(() => {
         let newMap = changeDataMap();
@@ -42,21 +41,21 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
 
     const changeDataMap = () => {
         const newMap = new Map();
-        let max = -100;
-        let min = 100;
+        let max_temp = -100;
+        let min_temp = 100;
         let max_rain = -100;
         let min_rain = 100;
         statesInfo.forEach((d) => {
             if (d.MONTH == month) {
-                newMap.set(AbbrToFull[d.STATE], [d[attribute], d[attribute_rain]]);
-                max = Math.max(max, d[attribute]);
-                min = Math.min(min, d[attribute]);
+                newMap.set(AbbrToFull[d.STATE], [d[attribute_temp], d[attribute_rain]]);
+                max_temp = Math.max(max_temp, d[attribute_temp]);
+                min_temp = Math.min(min_temp, d[attribute_temp]);
                 max_rain = Math.max(max_rain, d[attribute_rain]);
                 min_rain = Math.min(min_rain, d[attribute_rain]);
             }
         });
-        setMaxValue(Number(max).toFixed(2));
-        setMinValue(Number(min).toFixed(2));
+        setMaxValue_temp(Number(max_temp).toFixed(2));
+        setMinValue_temp(Number(min_temp).toFixed(2));
         setMaxValue_rain(Number(max_rain).toFixed(2));
         setMinValue_rain(Number(min_rain).toFixed(2));
         return newMap;
@@ -79,8 +78,8 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
     };
 
     const temperatureColorScale = scaleSequential(interpolateReds).domain([
-        minValue,
-        maxValue,
+        minValue_temp,
+        maxValue_temp,
     ]);
     
     const rainfallColorScale = scaleSequential(interpolateBlues).domain([
@@ -159,16 +158,16 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
                 <Typography variant="caption" display="block" gutterBottom fontSize="1em">
                     Temperature Scale (°C)
                 </Typography>
-                <svg width="300" height="50">
+                <svg width="300" height="85">
                     <defs>
                     <linearGradient id="temperature-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={temperatureColorScale(minValue)} />
-                        <stop offset="100%" stopColor={temperatureColorScale(maxValue)} />
+                        <stop offset="0%" stopColor={temperatureColorScale(minValue_temp)} />
+                        <stop offset="100%" stopColor={temperatureColorScale(maxValue_temp)} />
                     </linearGradient>
                     </defs>
-                    <rect x="10" y="10" width="280" height="20" fill="url(#temperature-gradient)" />
-                    <text x="10" y="40" textAnchor="start">{minValue}</text>
-                    <text x="290" y="40" textAnchor="end">{maxValue}</text>
+                    <rect x="10" y="30" width="280" height="20" fill="url(#temperature-gradient)" />
+                    <text x="10" y="65" textAnchor="start">{minValue_temp}</text>
+                    <text x="290" y="65" textAnchor="end">{maxValue_temp}</text>
                 </svg>
             </Box>
             <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
@@ -178,8 +177,8 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
                 <svg width="300" height="50">
                     <defs>
                     <linearGradient id="rain-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={rainfallColorScale(minValue)} />
-                        <stop offset="100%" stopColor={rainfallColorScale(maxValue)} />
+                        <stop offset="0%" stopColor={rainfallColorScale(minValue_rain)} />
+                        <stop offset="100%" stopColor={rainfallColorScale(maxValue_rain)} />
                     </linearGradient>
                     </defs>
                     <rect x="10" y="10" width="280" height="20" fill="url(#rain-gradient)" />

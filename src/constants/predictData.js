@@ -11,34 +11,6 @@
 //     MonthlyAvgWindSpeed: [5.055667, 7.0825, 8.466129, 9.668548, 10.903379],
 // };
 
-export const predictQuestion = {
-    MonthlyAvgPreciptation:
-        "I would like to live in a place with less precipitation.",
-    MonthlyAvgSnowfall:
-        "I would like to live in a place with very little snow.",
-    MonthlyTotalSnowfall:
-        "I would like to live in a place with very little snow.",
-    MonthlyAvgDaylight: "I would like to live in a place with less sunlight.",
-    MonthlyAvgTemp: "I would like to live in a cold place.",
-    MonthlyAvgTempDiff:
-        "I would like to live in a place where the temperature doesn’t change a lot in a day.",
-    MonthlyAvgRelativeHumidity:
-        "I would like to live in a place with less humidity.",
-    MonthlyAvgWindSpeed: "I would like to live in a place with less wind.",
-    MonthlyMaxPrecip:
-        "I would like to live in a place with nearly no huge rain.",
-    MonthlyMaxSnowfall:
-        "I would like to live in a place with nearly no huge snow.",
-    MonthlyAvgPeakWindSpeed:
-        "I would like to live in a place with nearly no huge wind.",
-    MonthlyAvgSnowDepth:
-        "I would like to live in a place with shallower snow or even no snow.",
-    MonthlyMaxTempDiff:
-        "I would like to live in a place with nearly no huge temperature difference.",
-    MonthlyMinDailyTempDiff:
-        "I would like to live in a place where the temperature barely changes per day.",
-};
-
 export const attributes = [
     "MonthlyMaxPrecip",
     "MonthlyTotalSnowfall",

@@ -13,7 +13,6 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState, useEffect, Fragment } from "react";
-import Container from "@mui/material/Container";
 import "./styles.css";
 import { AbbrToFull } from "../../constants/StateHash";
 
@@ -33,7 +32,7 @@ const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
     useEffect(() => {
         let newMap = changeDataMap();
         setDataMap(newMap);
-    }, [month, attribute]);
+    }, [month]);
 
     const changeDataMap = () => {
         const newMap = new Map();
@@ -104,7 +103,7 @@ const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
                                           className="states"
                                           key={feature.id}
                                           d={path(feature)}
-                                          fill={colorScale(data)}
+                                          fill={colorScale(data?data:0)}
                                           onMouseOver={(e) =>
                                               handleMouseOver(e, data)
                                           }
@@ -122,6 +121,22 @@ const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
                               })}
                         <path className="interiors3" d={path(interiors)} />
                     </g>
+                </svg>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
+                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
+                    Preciptation Scale (mm)
+                </Typography>
+                <svg width="300" height="85">
+                    <defs>
+                    <linearGradient id="rain-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor={colorScale(minValue)} />
+                        <stop offset="100%" stopColor={colorScale(maxValue)} />
+                    </linearGradient>
+                    </defs>
+                    <rect x="10" y="30" width="280" height="20" fill="url(#rain-gradient)" />
+                    <text x="10" y="65" textAnchor="start">{minValue}</text>
+                    <text x="290" y="65" textAnchor="end">{maxValue}</text>
                 </svg>
             </Box>
         </Box>
