@@ -1,0 +1,10 @@
+.marks3 .states3 {
+    fill: #137b80;
+}
+.marks3 .interiors3 {
+    fill: none;
+    stroke: #c0c0bb;
+}
+.marks3 .states3:hover {
+    fill: green;
+}

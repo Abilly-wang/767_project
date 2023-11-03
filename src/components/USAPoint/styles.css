@@ -1,0 +1,10 @@
+.marks2 .states2 {
+    fill: #137b80;
+}
+.marks2 .interiors2 {
+    fill: none;
+    stroke: #c0c0bb;
+}
+.marks2 .states2:hover {
+    fill: green;
+}

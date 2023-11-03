@@ -1,0 +1,10 @@
+.marks4 .states4 {
+    fill: #137b80;
+}
+.marks4 .interiors4 {
+    fill: none;
+    stroke: #c0c0bb;
+}
+.marks4 .states4:hover {
+    fill: green;
+}
