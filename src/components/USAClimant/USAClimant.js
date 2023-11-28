@@ -7,7 +7,6 @@ import {
     interpolateRgb,
     scaleSequential,
     scaleLinear,
-    max,
 } from "d3";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -24,13 +23,6 @@ const path = geoPath(projection);
 
 const width = 960;
 const height = 500;
-
-//temperature
-const colors0 = ["#3795d8", "#63962e", "#dc892c", "#99323f"];
-const categories0 = ["cold", "cool", "warm", "hot"];
-//rainfall
-const colors1 = ["#adbe54", "#89a6be", "#2d6fd8", "#132d5b"];
-const categories1 = ["trace", "light", "moderate", "heavy"];
 
 const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
     const [month, setMonth] = useState(1);
@@ -75,7 +67,7 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
     };
 
     const handleMouseOver = (e, data) => {
-        setStateData(data);
+        setStateData(Number(data).toFixed(2));
     }; 
 
     const mixColors = (colorA, colorB, mix = 0.5) => {
@@ -95,9 +87,6 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
         maxValue_rain,
     ]);
     
-    const colorScale = (data, maxValue, minValue) => {
-        return Math.floor((data - minValue + 0.01) / (maxValue - minValue + 0.01) / 0.25);
-    };
 
     const months = Array.from(Array(12), (_, i) => i + 1);
 
@@ -135,8 +124,8 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
                                   );
                                 // console.log(data[1])
                                   const color = mixColors(
-                                    colors0[colorScale(data?data[0]:0, maxValue_temp, minValue_temp)],
-                                    colors1[colorScale(data?data[1]:0, maxValue_rain, minValue_rain)],
+                                    temperatureColorScale(data?data[0]:0),
+                                    rainfallColorScale(data?data[1]:0),
                                      // This could also be a fixed value if you want a constant mix ratio
                                 );
                                
@@ -147,9 +136,7 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
                                           d={path(feature)}
                                           fill={color}
                                           onMouseOver={(e) =>
-                                            handleMouseOver(e, "Climate: " + 
-                                            categories0[colorScale(data?data[0]:0, maxValue_temp, minValue_temp)] 
-                                            + "-" + categories1[colorScale(data?data[1]:0, maxValue_rain, minValue_rain)])
+                                            handleMouseOver(e, data[0])
                                         }
                                       />
                                   );
@@ -165,6 +152,38 @@ const USAClimant = ({ USAtlas: { states, interiors }, statesInfo }) => {
                               })}
                         <path className="interiors4" d={path(interiors)} />
                     </g>
+                </svg>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
+                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
+                    Temperature Scale (°C)
+                </Typography>
+                <svg width="300" height="85">
+                    <defs>
+                    <linearGradient id="temperature-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor={temperatureColorScale(minValue_temp)} />
+                        <stop offset="100%" stopColor={temperatureColorScale(maxValue_temp)} />
+                    </linearGradient>
+                    </defs>
+                    <rect x="10" y="30" width="280" height="20" fill="url(#temperature-gradient)" />
+                    <text x="10" y="65" textAnchor="start">{minValue_temp}</text>
+                    <text x="290" y="65" textAnchor="end">{maxValue_temp}</text>
+                </svg>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
+                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
+                    Preciptation Scale (mm)
+                </Typography>
+                <svg width="300" height="50">
+                    <defs>
+                    <linearGradient id="rain-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor={rainfallColorScale(minValue_rain)} />
+                        <stop offset="100%" stopColor={rainfallColorScale(maxValue_rain)} />
+                    </linearGradient>
+                    </defs>
+                    <rect x="10" y="10" width="280" height="20" fill="url(#rain-gradient)" />
+                    <text x="10" y="40" textAnchor="start">{minValue_rain}</text>
+                    <text x="290" y="40" textAnchor="end">{maxValue_rain}</text>
                 </svg>
             </Box>
         </Box>

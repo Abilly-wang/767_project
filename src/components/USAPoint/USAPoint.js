@@ -16,15 +16,12 @@ import { useState, useEffect, Fragment } from "react";
 import Container from "@mui/material/Container";
 import "./styles.css";
 import { AbbrToFull } from "../../constants/StateHash";
-import { data } from "vega-lite-api";
 
 const projection = geoAlbersUsa();
 const path = geoPath(projection);
 
 const width = 960;
 const height = 500;
-
-const colors = ["#3795d8", "#63962e", "#dc892c", "#99323f"];
 
 const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
     const [month, setMonth] = useState(1);
@@ -62,9 +59,10 @@ const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
         setStateData(Number(data).toFixed(2));
     };
 
-    const colorScale = (data) => {
-        return Math.floor((data - minValue + 0.01) / (maxValue - minValue + 0.01) / 0.25);
-    };
+    const colorScale = scaleSequential(interpolateReds).domain([
+        minValue,
+        maxValue,
+    ]);
 
     
     const months = Array.from(Array(12), (_, i) => i + 1);
@@ -106,7 +104,7 @@ const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
                                           className="states"
                                           key={feature.id}
                                           d={path(feature)}
-                                          fill={colors[colorScale(data?data:0)]}
+                                          fill={colorScale(data?data:0)}
                                           onMouseOver={(e) =>
                                               handleMouseOver(e, data)
                                           }
@@ -126,36 +124,20 @@ const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
                     </g>
                 </svg>
             </Box>
-            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
+            <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
                 <Typography variant="caption" display="block" gutterBottom fontSize="1em">
-                    hot
+                    Temperature Scale (°C)
                 </Typography>
-                <svg width="80" height="20">
-                    <rect x="10" y="0" width="80" height="20" fill={colors[3]} />
-                </svg>
-            </Box>
-            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
-                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
-                    warm
-                </Typography>
-                <svg width="80" height="20">
-                    <rect x="10" y="0" width="80" height="20" fill={colors[2]} />
-                </svg>
-            </Box>
-            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
-                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
-                    cool
-                </Typography>
-                <svg width="80" height="20">
-                    <rect x="10" y="0" width="80" height="20" fill={colors[1]} />
-                </svg>
-            </Box>
-            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
-                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
-                    cold
-                </Typography>
-                <svg width="80" height="20">
-                    <rect x="10" y="0" width="80" height="20" fill={colors[0]} />
+                <svg width="300" height="85">
+                    <defs>
+                    <linearGradient id="temperature-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor={colorScale(minValue)} />
+                        <stop offset="100%" stopColor={colorScale(maxValue)} />
+                    </linearGradient>
+                    </defs>
+                    <rect x="10" y="30" width="280" height="20" fill="url(#temperature-gradient)" />
+                    <text x="10" y="65" textAnchor="start">{minValue}</text>
+                    <text x="290" y="65" textAnchor="end">{maxValue}</text>
                 </svg>
             </Box>
         </Box>
