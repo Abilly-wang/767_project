@@ -22,6 +22,8 @@ const path = geoPath(projection);
 const width = 960;
 const height = 500;
 
+const colors = ["#adbe54", "#89a6be", "#2d6fd8", "#132d5b"];
+
 const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
     const [month, setMonth] = useState(1);
     const [dataMap, setDataMap] = useState(new Map());
@@ -58,10 +60,9 @@ const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
         setStateData(Number(data).toFixed(2));
     };
 
-    const colorScale = scaleSequential(interpolateBlues).domain([
-        minValue,
-        maxValue,
-    ]);
+    const colorScale = (data) => {
+        return Math.floor((data - minValue + 0.01) / (maxValue - minValue + 0.01) / 0.25);
+    }
 
     
     const months = Array.from(Array(12), (_, i) => i + 1);
@@ -103,7 +104,7 @@ const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
                                           className="states"
                                           key={feature.id}
                                           d={path(feature)}
-                                          fill={colorScale(data?data:0)}
+                                          fill={colors[colorScale(data?data:0)]}
                                           onMouseOver={(e) =>
                                               handleMouseOver(e, data)
                                           }
@@ -123,20 +124,36 @@ const USAPrecip = ({ USAtlas: { states, interiors }, statesInfo }) => {
                     </g>
                 </svg>
             </Box>
-            <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
+            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
                 <Typography variant="caption" display="block" gutterBottom fontSize="1em">
-                    Preciptation Scale (mm)
+                    heavy
                 </Typography>
-                <svg width="300" height="85">
-                    <defs>
-                    <linearGradient id="rain-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={colorScale(minValue)} />
-                        <stop offset="100%" stopColor={colorScale(maxValue)} />
-                    </linearGradient>
-                    </defs>
-                    <rect x="10" y="30" width="280" height="20" fill="url(#rain-gradient)" />
-                    <text x="10" y="65" textAnchor="start">{minValue}</text>
-                    <text x="290" y="65" textAnchor="end">{maxValue}</text>
+                <svg width="80" height="20">
+                    <rect x="10" y="0" width="80" height="20" fill={colors[3]} />
+                </svg>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
+                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
+                    moderate
+                </Typography>
+                <svg width="80" height="20">
+                    <rect x="10" y="0" width="80" height="20" fill={colors[2]} />
+                </svg>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
+                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
+                    light
+                </Typography>
+                <svg width="80" height="20">
+                    <rect x="10" y="0" width="80" height="20" fill={colors[1]} />
+                </svg>
+            </Box>
+            <Box display="flex" alignItems="center" justifyContent="flex-end" flexDirection="row">
+                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
+                    trace
+                </Typography>
+                <svg width="80" height="20">
+                    <rect x="10" y="0" width="80" height="20" fill={colors[0]} />
                 </svg>
             </Box>
         </Box>

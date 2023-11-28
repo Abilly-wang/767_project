@@ -26,7 +26,7 @@ function App() {
                 sx={{ m: "5em auto auto 2em" }}
             >
                 <Typography variant="h3" component="h2">
-                    {"Climant Visualization"}
+                    {"Climate Visualization"}
                 </Typography>
             </Box>
             <Container>
