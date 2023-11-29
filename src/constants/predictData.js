@@ -1,5 +1,5 @@
 // export const predictData = {
-//     MonthlyAvgPreciptation: [0.021, 0.052, 0.118571, 0.163866, 0.196165],
+//     MonthlyAvgPrecipitation: [0.021, 0.052, 0.118571, 0.163866, 0.196165],
 //     MonthlyAvgSnowfall: [0.0, 0.034677, 0.131068, 0.184848, 0.308654],
 //     MonthlyTotalSnowfall: [0.5, 1.7, 3.0, 4.9, 7.4],
 //     MonthlyAvgDaylight: [618.24, 717.935, 731.27, 827.8333, 930.0548],
@@ -18,7 +18,7 @@ export const attributes = [
     "MonthlyAvgTemp",
     "MonthlyAvgDaylight",
     "MonthlyAvgTempDiff",
-    "MonthlyAvgPreciptation",
+    "MonthlyAvgPrecipitation",
     "MonthlyAvgRelativeHumidity",
     "MonthlyAvgWindSpeed",
     "MonthlyAvgPeakWindSpeed",

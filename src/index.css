@@ -7,7 +7,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(255, 243, 226);
 }
+button {
+  font-size: 30px;
+  line-height: 1em;
+  margin: 3%;
+  background: rgba(168, 106, 35, 0.2);
+  position: relative;
+  top: 10px; /* Adjust as needed for spacing from the top */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px; /* Padding inside the button */
+  border: 2px solid #af844c; /* Sleeker border with a different color */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Changes cursor to a pointer on hover */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for hover effects */
+}
 
+button:hover {
+  background-color: #afa54c; /* Change background color on hover */
+  border-color: #9e964a; /* Change border color on hover */
+  color: white; /* Change text color on hover */
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

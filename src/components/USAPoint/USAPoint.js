@@ -23,6 +23,23 @@ const path = geoPath(projection);
 const width = 960;
 const height = 500;
 
+const tempLegendColors = ["rgb(255, 204, 204)", "rgb(255, 100, 100)", "rgb(255, 50, 50)", "rgb(204, 0, 0)"];
+const tempLegendLabels = ["Cold", "Cool", "Warm", "Hot"];
+
+const Legend = ({ colors, labels }) => (
+    <div className="legend" style={{ marginRight: "20px" }}>
+        {labels.map((label, i) => (
+            <div key={i} className="legend-item">
+                <svg width="50" height="22">
+                    <rect width="40" height="20" fill={colors[i]} />
+                </svg>
+                <span>{label}</span>
+            </div>
+        ))}
+    </div>
+);
+
+
 const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
     const [month, setMonth] = useState(1);
     const [dataMap, setDataMap] = useState(new Map());
@@ -41,7 +58,7 @@ const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
         let min = 100;
         statesInfo.forEach((d) => {
             if (d.MONTH == month) {
-                newMap.set(AbbrToFull[d.STATE], d[attribute]);
+                newMap.set(AbbrToFull[d.STATE], [d[attribute], d["MonthlyAvgTemp_scale"]]);
                 max = Math.max(max, d[attribute]);
                 min = Math.min(min, d[attribute]);
             }
@@ -104,9 +121,9 @@ const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
                                           className="states"
                                           key={feature.id}
                                           d={path(feature)}
-                                          fill={colorScale(data?data:0)}
+                                          fill={tempLegendColors[parseInt(data ? data[1] : 1, 10)-1]}
                                           onMouseOver={(e) =>
-                                              handleMouseOver(e, data)
+                                              handleMouseOver(e, data[0])
                                           }
                                       />
                                   );
@@ -125,20 +142,7 @@ const USAPoint = ({ USAtlas: { states, interiors }, statesInfo }) => {
                 </svg>
             </Box>
             <Box display="flex" alignItems="center" justifyContent="left" flexDirection="row">
-                <Typography variant="caption" display="block" gutterBottom fontSize="1em">
-                    Temperature Scale (°C)
-                </Typography>
-                <svg width="300" height="85">
-                    <defs>
-                    <linearGradient id="temperature-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor={colorScale(minValue)} />
-                        <stop offset="100%" stopColor={colorScale(maxValue)} />
-                    </linearGradient>
-                    </defs>
-                    <rect x="10" y="30" width="280" height="20" fill="url(#temperature-gradient)" />
-                    <text x="10" y="65" textAnchor="start">{minValue}</text>
-                    <text x="290" y="65" textAnchor="end">{maxValue}</text>
-                </svg>
+                <Legend colors={tempLegendColors} labels={tempLegendLabels} />
             </Box>
         </Box>
     );
