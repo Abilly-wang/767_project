@@ -23,7 +23,7 @@ const width = 960;
 const height = 500;
 
 const rainLegendColors = ["rgb(189, 218, 255)", "rgb(139, 190, 255)", "rgb(50, 118, 208)", "rgb(0, 57, 131)"];
-const rainLegendLabels = ["Trace", "Light", "Moderate", "Heavy"];
+const rainLegendLabels = ["Drizzle", "Light", "Moderate", "Heavy"];
 
 const Legend = ({ colors, labels }) => (
     <div className="legend" style={{ marginRight: "20px" }}>

@@ -29,7 +29,7 @@ const tempLegendColors = ["rgb(255, 204, 204)", "rgb(255, 100, 100)", "rgb(255, 
 const tempLegendLabels = ["Cold", "Cool", "Warm", "Hot"];
 
 const rainLegendColors = ["rgb(189, 218, 255)", "rgb(139, 190, 255)", "rgb(50, 118, 208)", "rgb(0, 57, 131)"];
-const rainLegendLabels = ["Trace", "Light", "Moderate", "Heavy"];
+const rainLegendLabels = ["Drizzle", "Light", "Moderate", "Heavy"];
 
 
 
@@ -49,15 +49,15 @@ const allColors = ['rgb(222, 211, 229)',
 'rgb(127, 59, 104)',
 'rgb(127, 53, 90)',
 'rgb(102, 28, 65)'];
-const allLabels = ['Cold-Trace',
+const allLabels = ['Cold-Drizzle',
 'Cold-Light',
-'Cool-Trace',
+'Cool-Drizzle',
 'Cold-Moderate',
 'Cool-Light',
-'Warm-Trace',
+'Warm-Drizzle',
 'Cold-Heavy',
 'Warm-Light',
-'Hot-Trace',
+'Hot-Drizzle',
 'Cool-Moderate',
 'Hot-Light',
 'Warm-Moderate',
