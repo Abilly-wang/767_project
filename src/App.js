@@ -47,7 +47,7 @@ function App() {
                     style={{ border: 'none' }}
                 />
                 <iframe 
-                    src={process.env.PUBLIC_URL+"/bubble_plot_avg_precipitation.html"}
+                    src={process.env.PUBLIC_URL+"/bubble_plot_avg_monthly_rain.html"}
                     title="Bubble Plot Visualization"
                     width="100%"
                     height="1300"
