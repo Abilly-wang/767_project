@@ -66,7 +66,7 @@ function App() {
 
     return (
         <div className="App">
-            <button onClick={() => setShowMainContent(false)}>Show Main Content</button>
+            <button onClick={() => setShowMainContent(false)}>Back Main Page</button>
             <Box
                 display="flex"
                 alignItems="center"
